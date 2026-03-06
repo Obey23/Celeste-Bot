@@ -16,6 +16,8 @@ A Discord bot made to be ran remotely on a windows machine and auto update from 
   ```dosini
   token=YOUR_BOT_TOKEN
   clientId=YOUR_CLIENT_ID
+  guildId=YOUR_SERVER_ID
   ```
   of course replacing each value with your bot's respective token and client id
-- Step 5: Run `start.bat` to start up the bot
+- Step 5: Edit `config.json` values to match your own server categories/roles/etc.
+- Step 6: Run `start.bat` to start up the bot
