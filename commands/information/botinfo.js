@@ -37,7 +37,8 @@ module.exports = {
                     { name: '📖 Library', value: '[Discord.js](https://discord.js.org)', inline: true },
                     { name: '💽 Memory Usage', value: (Math.round(memUsage.heapUsed / 1024 / 1024 * 100) / 100).toString() + ' MB', inline: true },
                     { name: '🏓 Ping', value: 'Latency is ' + (now - interaction.createdTimestamp) + 'ms\nAPI Latency is ' + interaction.client.ws.ping + 'ms', inline: true },
-                    { name: '⬆️ Uptime', value: prettyTime(process.uptime() * 1000, true) || 'N/A', inline: true }
+                    { name: '⬆️ Uptime', value: prettyTime(process.uptime() * 1000, true) || 'N/A', inline: true },
+                    { name: '⌨️ Source Code', value: 'Celeste is Open Source which canbe viewed on our [Github Repo](https://github.com/Obey23/Celeste-Bot)' }
                 )
                 .setColor(0xffffff)
                 .setFooter({ text: 'Made by Jessica ♡' })
