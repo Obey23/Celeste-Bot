@@ -1,4 +1,4 @@
-# Nova Bot
+# Celeste Bot
 
 A Discord bot made to be ran remotely on a windows machine and auto update from this github repo, for [The Transgender Deepstate](https://discord.gg/hThCg2Zj3b)
 
@@ -10,7 +10,7 @@ A Discord bot made to be ran remotely on a windows machine and auto update from 
 
 ## Installation
 - Step 1: Make sure you have the Dependencies
-- Step 2: Clone the repo by running `git clone https://github.com/Obey23/Nova-Bot.git` in command prompt
+- Step 2: Clone the repo by running `git clone https://github.com/Obey23/Celeste-Bot.git` in command prompt
 - Step 3: Run `npm i` in command prompt
 - Step 4: Create `.env` file in your directory with the contents:
   ```dosini
