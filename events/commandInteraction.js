@@ -1,6 +1,4 @@
-const { Events, MessageFlags, EmbedBuilder, PermissionFlagsBits } = require('discord.js');
-const path = require('node:path');
-const fs = require('node:fs');
+const { Events, MessageFlags } = require('discord.js');
 
 module.exports = {
     name: Events.InteractionCreate,
