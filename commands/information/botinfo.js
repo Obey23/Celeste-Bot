@@ -21,8 +21,8 @@ module.exports = {
         .setDescription('Displays information and stats about the bot'),
     async execute(interaction) {
         try {
-            const serversPath = path.join(__dirname, '../../');
-            const configPath = serversPath + 'config.json';
+            const root = path.join(__dirname, '../../');
+            const configPath = root + 'config.json';
             const botConfig = JSON.parse(fs.readFileSync(configPath || {}));
             const now = new Date();
             const memUsage = process.memoryUsage()
