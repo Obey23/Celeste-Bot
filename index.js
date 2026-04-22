@@ -8,6 +8,8 @@ const client = new Client({
     intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildMembers, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildMessageReactions],
 });
 
+client.ticketTempData = new Collection();
+
 client.commands = new Collection();
 const commands = [];
 const foldersPath = path.join(__dirname, 'commands');
