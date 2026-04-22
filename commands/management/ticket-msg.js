@@ -32,8 +32,7 @@ module.exports = {
                         new StringSelectMenuOptionBuilder()
                             .setLabel('Support')
                             .setValue('Support')
-                            .setDescription('General support ticket to discuss with staff')
-                            .setDefault(true),
+                            .setDescription('General support ticket to discuss with staff'),
                         new StringSelectMenuOptionBuilder()
                             .setLabel('Report')
                             .setValue('Report')
