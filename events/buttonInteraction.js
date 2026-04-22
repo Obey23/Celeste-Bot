@@ -1,4 +1,4 @@
-const { EmbedBuilder, Events, PermissionOverwrites, ChannelType, MessageFlags, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionsBitField, PermissionFlagsBits } = require('discord.js');
+const { EmbedBuilder, Events, PermissionOverwrites, ChannelType, MessageFlags, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionsBitField, PermissionFlagsBits, Collection } = require('discord.js');
 const fs = require('node:fs');
 const path = require('node:path');
 const wait = require('util').promisify(setTimeout);
@@ -104,6 +104,7 @@ module.exports = {
                 }
 
                 fs.writeFileSync(ticketDataPath, JSON.stringify(ticketData));
+                interaction.client.ticketTempData.delete(interaction.user.id);
 
                 await interaction.editReply({ embeds: [ new EmbedBuilder()
                     .setDescription('Ticket opened: ' + ticket.toString())
