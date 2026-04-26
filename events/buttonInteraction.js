@@ -22,36 +22,64 @@ module.exports = {
                 const userId = interaction.message?.embeds[0]?.footer?.text?.slice(9);
                 const member = await interaction.guild.members.resolve(userId);
                 await member.roles.add(verifyRole, 'Verified by ' + interaction.user.username + ' (' + interaction.user.id + ')');
-                await member.send({ embeds: [ new EmbedBuilder()
+                const msg = await member.send({ embeds: [ new EmbedBuilder()
                     .setTitle('🔞 Verify')
                     .setDescription('Your verification request has been approved.')
                     .setColor(0xffffff)
                     .setTimestamp()
-                ]});
-                await interaction.editReply({ embeds: [ new EmbedBuilder()
-                    .setDescription(member.toString() + ' has been given the ' + verifyRole.toString() + ' role successfully.\n\nDeleting channel in 5 seconds...')
-                    .setFooter({ text: 'By: ' + interaction.user.username })
-                    .setColor(0xffffff)
-                ]});
-                await wait(5 * 1000);
-                await interaction.channel.delete('User was verified');
+                ]}).catch(error => { return; });
+                if (!msg) {
+                    await interaction.editReply({ embeds: [ new EmbedBuilder()
+                        .setDescription('I was unable to DM the user their verification response')
+                        .setFooter({ text: 'By: ' + interaction.user.username })
+                        .setColor(0xffffff)
+                    ]});
+                    await interaction.followUp({ embeds: [ new EmbedBuilder()
+                        .setDescription(member.toString() + ' has been given the ' + verifyRole.toString() + ' role successfully.\n\nDeleting channel in 60 seconds...')
+                        .setFooter({ text: 'By: ' + interaction.user.username })
+                        .setColor(0xffffff)
+                    ]});
+                    await wait(60 * 1000);
+                } else {
+                    await interaction.editReply({ embeds: [ new EmbedBuilder()
+                        .setDescription(member.toString() + ' has been given the ' + verifyRole.toString() + ' role successfully.\n\nDeleting channel in 5 seconds...')
+                        .setFooter({ text: 'By: ' + interaction.user.username })
+                        .setColor(0xffffff)
+                    ]});
+                    await wait(5 * 1000);
+                }
+                await interaction.channel.delete('User was verified by ' + interaction.user.username);
             } else if (interaction.customId == 'no-verify-user') {
                 await interaction.deferReply();
                 const userId = interaction.message?.embeds[0]?.footer?.text?.slice(9);
                 const member = await interaction.guild.members.resolve(userId);
-                await member.send({ embeds: [ new EmbedBuilder()
+                const msg = await member.send({ embeds: [ new EmbedBuilder()
                     .setTitle('🔞 Verify')
                     .setDescription('Your verification request has been denied.')
                     .setColor(0xffffff)
                     .setTimestamp()
-                ]});
-                await interaction.editReply({ embeds: [ new EmbedBuilder()
-                    .setDescription(member.toString() + ' has been notified that their request was declined.\n\nDeleting channel in 5 seconds...')
-                    .setFooter({ text: 'By: ' + interaction.user.username })
-                    .setColor(0xffffff)
-                ]});
-                await wait(5 * 1000);
-                await interaction.channel.delete('User was not verified');
+                ]}).catch(error => { return; });
+                if (!msg) {
+                    await interaction.editReply({ embeds: [ new EmbedBuilder()
+                        .setDescription('I was unable to DM the user their verification response')
+                        .setFooter({ text: 'By: ' + interaction.user.username })
+                        .setColor(0xffffff)
+                    ]});
+                    await interaction.followUp({ embeds: [ new EmbedBuilder()
+                        .setDescription(member.toString() + ' has been notified that their request was declined.\n\nDeleting channel in 60 seconds...')
+                        .setFooter({ text: 'By: ' + interaction.user.username })
+                        .setColor(0xffffff)
+                    ]});
+                    await wait(60 * 1000);
+                } else {
+                    await interaction.editReply({ embeds: [ new EmbedBuilder()
+                        .setDescription(member.toString() + ' has been notified that their request was declined.\n\nDeleting channel in 5 seconds...')
+                        .setFooter({ text: 'By: ' + interaction.user.username })
+                        .setColor(0xffffff)
+                    ]});
+                    await wait(5 * 1000);
+                }
+                await interaction.channel.delete('User was rejected by ' + interaction.user.username);
             } else if (interaction.customId == 'ticket-open') {
                 const type = (await interaction.client.ticketTempData.get(interaction.user.id))?.ticketType;
                 if (!type) {

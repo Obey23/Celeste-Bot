@@ -83,7 +83,7 @@ module.exports = {
                     .setDescription('We have received your verification request. Our moderation team will review it and either accept or deny your request.\n\nYou will receive a private message once your request has been processed.')
                     .setColor(0xffffff)
                     .setTimestamp()
-                ]});
+                ]}).catch(error => { return; });
                 await interaction.editReply({ embeds: [ new EmbedBuilder()
                     .setTitle('🔞 Verify')
                     .setDescription('We have received your verification request. Our moderation team will review it and either accept or deny your request.\n\nYou will receive a private message once your request has been processed.')
