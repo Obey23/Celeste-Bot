@@ -21,6 +21,15 @@ module.exports = {
                 const verifyRole = await interaction.guild.roles.resolve(botConfig['verifyRoleId'] || '');
                 const userId = interaction.message?.embeds[0]?.footer?.text?.slice(9);
                 const member = await interaction.guild.members.resolve(userId);
+                if (!member) {
+                    await interaction.reply({ embeds: [ new EmbedBuilder()
+                        .setDescription('The user has left the guild and therefore cannot be verified.\n\nDeleting channel in 30 seconds...')
+                        .setFooter({ text: 'By: ' + interaction.user.username })
+                        .setColor(0xffffff)
+                    ]});
+                    await wait(30 * 1000);
+                    return await interaction.channel.delete('User left the guild');
+                }
                 await member.roles.add(verifyRole, 'Verified by ' + interaction.user.username + ' (' + interaction.user.id + ')');
                 const msg = await member.send({ embeds: [ new EmbedBuilder()
                     .setTitle('🔞 Verify')
@@ -35,11 +44,11 @@ module.exports = {
                         .setColor(0xffffff)
                     ]});
                     await interaction.followUp({ embeds: [ new EmbedBuilder()
-                        .setDescription(member.toString() + ' has been given the ' + verifyRole.toString() + ' role successfully.\n\nDeleting channel in 60 seconds...')
+                        .setDescription(member.toString() + ' has been given the ' + verifyRole.toString() + ' role successfully.\n\nDeleting channel in 30 seconds...')
                         .setFooter({ text: 'By: ' + interaction.user.username })
                         .setColor(0xffffff)
                     ]});
-                    await wait(60 * 1000);
+                    await wait(30 * 1000);
                 } else {
                     await interaction.editReply({ embeds: [ new EmbedBuilder()
                         .setDescription(member.toString() + ' has been given the ' + verifyRole.toString() + ' role successfully.\n\nDeleting channel in 5 seconds...')
@@ -53,6 +62,15 @@ module.exports = {
                 await interaction.deferReply();
                 const userId = interaction.message?.embeds[0]?.footer?.text?.slice(9);
                 const member = await interaction.guild.members.resolve(userId);
+                if (!member) {
+                    await interaction.reply({ embeds: [ new EmbedBuilder()
+                        .setDescription('The user has left the guild and therefore cannot be verified.\n\nDeleting channel in 30 seconds...')
+                        .setFooter({ text: 'By: ' + interaction.user.username })
+                        .setColor(0xffffff)
+                    ]});
+                    await wait(30 * 1000);
+                    return await interaction.channel.delete('User left the guild');
+                }
                 const msg = await member.send({ embeds: [ new EmbedBuilder()
                     .setTitle('🔞 Verify')
                     .setDescription('Your verification request has been denied.')
@@ -66,11 +84,11 @@ module.exports = {
                         .setColor(0xffffff)
                     ]});
                     await interaction.followUp({ embeds: [ new EmbedBuilder()
-                        .setDescription(member.toString() + ' has been notified that their request was declined.\n\nDeleting channel in 60 seconds...')
+                        .setDescription(member.toString() + ' has been notified that their request was declined.\n\nDeleting channel in 30 seconds...')
                         .setFooter({ text: 'By: ' + interaction.user.username })
                         .setColor(0xffffff)
                     ]});
-                    await wait(60 * 1000);
+                    await wait(30 * 1000);
                 } else {
                     await interaction.editReply({ embeds: [ new EmbedBuilder()
                         .setDescription(member.toString() + ' has been notified that their request was declined.\n\nDeleting channel in 5 seconds...')
