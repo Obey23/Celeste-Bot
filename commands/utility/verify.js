@@ -78,15 +78,17 @@ module.exports = {
                     .setColor(0xffffff)
                     .setTimestamp()
                 ], files: [ identification ], components: [ row ] });
-                await interaction.user.send({ embeds: [ new EmbedBuilder()
+                const msg = await interaction.user.send({ embeds: [ new EmbedBuilder()
                     .setTitle('🔞 Verify')
                     .setDescription('We have received your verification request. Our moderation team will review it and either accept or deny your request.\n\nYou will receive a private message once your request has been processed.')
                     .setColor(0xffffff)
                     .setTimestamp()
                 ]}).catch(error => { return; });
+                var dmStatus = 'You will receive a private message once your request has been processed.';
+                if (!msg) dmStatus = 'If you\'d like to be notified about your request status, please enable private messages for our guild in the privacy settings.';
                 await interaction.editReply({ embeds: [ new EmbedBuilder()
                     .setTitle('🔞 Verify')
-                    .setDescription('We have received your verification request. Our moderation team will review it and either accept or deny your request.\n\nYou will receive a private message once your request has been processed.')
+                    .setDescription('We have received your verification request. Our moderation team will review it and either accept or deny your request.\n\n' + dmStatus)
                     .setColor(0xffffff)
                     .setTimestamp()
                 ]});
