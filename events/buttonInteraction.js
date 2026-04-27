@@ -1,4 +1,4 @@
-const { EmbedBuilder, Events, PermissionOverwrites, ChannelType, MessageFlags, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionsBitField, PermissionFlagsBits, Collection } = require('discord.js');
+const { EmbedBuilder, Events, PermissionOverwrites, ChannelType, MessageFlags, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionsBitField, PermissionFlagsBits, Collection, ModalBuilder, TextDisplayBuilder, LabelBuilder, TextInputBuilder, TextInputStyle } = require('discord.js');
 const fs = require('node:fs');
 const path = require('node:path');
 const wait = require('util').promisify(setTimeout);
@@ -71,33 +71,25 @@ module.exports = {
                     await wait(30 * 1000);
                     return await interaction.channel.delete('User left the guild');
                 }
-                const msg = await member.send({ embeds: [ new EmbedBuilder()
-                    .setTitle('🔞 Verify')
-                    .setDescription('Your verification request has been denied.')
-                    .setColor(0xffffff)
-                    .setTimestamp()
-                ]}).catch(error => { return; });
-                if (!msg) {
-                    await interaction.editReply({ embeds: [ new EmbedBuilder()
-                        .setDescription('I was unable to DM the user their verification response')
-                        .setFooter({ text: 'By: ' + interaction.user.username })
-                        .setColor(0xffffff)
-                    ]});
-                    await interaction.followUp({ embeds: [ new EmbedBuilder()
-                        .setDescription(member.toString() + ' has been notified that their request was declined.\n\nDeleting channel in 30 seconds...')
-                        .setFooter({ text: 'By: ' + interaction.user.username })
-                        .setColor(0xffffff)
-                    ]});
-                    await wait(30 * 1000);
-                } else {
-                    await interaction.editReply({ embeds: [ new EmbedBuilder()
-                        .setDescription(member.toString() + ' has been notified that their request was declined.\n\nDeleting channel in 5 seconds...')
-                        .setFooter({ text: 'By: ' + interaction.user.username })
-                        .setColor(0xffffff)
-                    ]});
-                    await wait(5 * 1000);
-                }
-                await interaction.channel.delete('User was rejected by ' + interaction.user.username);
+                const modal = new ModalBuilder()
+                    .setCustomId('no-verify-user')
+                    .setTitle('Deny Request')
+                    .addTextDisplayComponents(
+                        new TextDisplayBuilder().setContent('You can optionally add a reason for denying the user\'s verification request.'),
+                        new TextDisplayBuilder().setContent('This reason message will be sent to the user.'))
+                    .addLabelComponents(
+                        new LabelBuilder()
+                            .setLabel('Reason for denying')
+                            .setTextInputComponent(
+                                new TextInputBuilder()
+                                    .setCustomId('deny-reason')
+                                    .setRequired(false)
+                                    .setStyle(TextInputStyle.Short)
+                                    .setPlaceholder('Account too new')
+                                    .setMaxLength(1014)
+                            )
+                    );
+                await interaction.showModal(modal);
             } else if (interaction.customId == 'ticket-open') {
                 const type = (await interaction.client.ticketTempData.get(interaction.user.id))?.ticketType;
                 if (!type) {
