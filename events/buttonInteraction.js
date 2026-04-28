@@ -59,7 +59,6 @@ module.exports = {
                 }
                 await interaction.channel.delete('User was verified by ' + interaction.user.username);
             } else if (interaction.customId == 'no-verify-user') {
-                await interaction.deferReply();
                 const userId = interaction.message?.embeds[0]?.footer?.text?.slice(9);
                 const member = await interaction.guild.members.resolve(userId);
                 if (!member) {
@@ -75,8 +74,8 @@ module.exports = {
                     .setCustomId('no-verify-user')
                     .setTitle('Deny Request')
                     .addTextDisplayComponents(
-                        new TextDisplayBuilder().setContent('You can optionally add a reason for denying the user\'s verification request.'),
-                        new TextDisplayBuilder().setContent('This reason message will be sent to the user.'))
+                        new TextDisplayBuilder().setContent('You can optionally add a reason for denying the user\'s verification request.\nThis reason message will be sent to the user.')
+                    )
                     .addLabelComponents(
                         new LabelBuilder()
                             .setLabel('Reason for denying')

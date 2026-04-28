@@ -34,9 +34,9 @@ module.exports = {
             } else if (!identification.contentType.startsWith('image/')) {
                 errorMessage = 'Your provided identification is not an image.';
             } else if (interaction.guild.channels.cache.find(c => c.name == interaction.user.username && c.parent == verifyCategory )) {
-                errorMessage = 'You already have an open verification request.'
+                errorMessage = 'You already have an open verification request.';
             } else if (member.roles.cache.find(r => r.id == verifyRole.id)) {
-                errorMessage = 'You are already verified!'
+                errorMessage = 'You are already verified!';
             };
 
             if (errorMessage) {

@@ -1,4 +1,5 @@
-const { Events, MessageFlags } = require('discord.js');
+const { Events, MessageFlags, EmbedBuilder } = require('discord.js');
+const wait = require('util').promisify(setTimeout);
 
 module.exports = {
     name: Events.InteractionCreate,
